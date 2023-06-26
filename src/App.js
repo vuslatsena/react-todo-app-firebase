@@ -28,6 +28,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
   const [filter, setFilter] = useState('All');
+  const [currentDateTime, setCurrentDateTime] = useState('');
 
   // Create todo
   const createTodo = async (e) => {
@@ -79,10 +80,24 @@ function App() {
     }
   };
 
+  // Set current date and time
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+      const formattedDate = now.toLocaleString(undefined, options).replace(/,/g, '');
+      setCurrentDateTime(formattedDate);
+    }, 1000);
+  
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <div className={style.bg}>
       <div className={style.container}>
         <h3 className={style.heading}>Todo App</h3>
+        <p className={style.count}>{`${currentDateTime}`}</p>
         <form onSubmit={createTodo} className={style.form}>
           <input
             value={input}
@@ -105,7 +120,7 @@ function App() {
             />
           ))}
         </ul>
-        {todos.length < 1 ? null : (
+        {todos.length > 0 && (
           <p className={style.count}>{`You have ${todos.length} todos`}</p>
         )}
         <div className={style.buttonContainer}>
