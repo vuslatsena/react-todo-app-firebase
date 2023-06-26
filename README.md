@@ -1,5 +1,4 @@
-# NTT DATA Business Solutions Turkey - Frontend Challenge'23
-
+# Firebase Todo App
 This repository contains simple todo app with firebase exercise
 
 ## Live Demo
